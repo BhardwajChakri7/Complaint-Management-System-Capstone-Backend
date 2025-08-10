@@ -1,0 +1,725 @@
+{
+	"info": {
+		"name": "Complete CMS API Collection",
+		"description": "Comprehensive collection for testing all CMS API endpoints including authentication, complaints, admin, and ML services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:6969",
+			"type": "string"
+		},
+		{
+			"key": "user_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/",
+					"host": ["{{base_url}}"],
+					"path": [""]
+				}
+			}
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "User Signup - Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.student@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"student\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/signup",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "User Signup - Faculty",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Jane Smith\",\n    \"email\": \"jane.faculty@example.com\",\n    \"password\": \"securepass456\",\n    \"role\": \"faculty\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/signup",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.collectionVariables.set('user_token', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.student@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Admin Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin User\",\n    \"number\": \"9876543210\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"adminpass123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/signup",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "signup"]
+						}
+					}
+				},
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.collectionVariables.set('admin_token', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"adminpass123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "login"]
+						}
+					}
+				},
+				{
+					"name": "Admin Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "profile"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Complaints",
+			"item": [
+				{
+					"name": "Submit Complaint (JSON)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "WiFi connectivity issue in library",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "The WiFi connection in the main library is very slow and keeps disconnecting. This is affecting my research work and online classes.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/complaints/submit",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "submit"]
+						}
+					}
+				},
+				{
+					"name": "Submit Complaint with Attachments",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Broken AC in classroom 101",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "The air conditioning unit in classroom 101 is not working properly. It's making loud noises and not cooling the room effectively.",
+									"type": "text"
+								},
+								{
+									"key": "attachments",
+									"type": "file",
+									"src": [],
+									"description": "Upload image/document files here"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/complaints/submit",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "submit"]
+						}
+					}
+				},
+				{
+					"name": "Get My Complaints",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/my-complaints?page=1&per_page=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "my-complaints"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Technical",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Complaint Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get All Complaints (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/all?page=1&per_page=20",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "all"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Technical",
+									"disabled": true
+								},
+								{
+									"key": "priority",
+									"value": "high",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "wifi",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Complaint Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"in_progress\",\n    \"admin_response\": \"We have assigned a technician to look into this issue. Expected resolution within 24 hours.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/complaints/1/update-status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "1", "update-status"]
+						}
+					}
+				},
+				{
+					"name": "Get Complaint Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/stats",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "stats"]
+						}
+					}
+				},
+				{
+					"name": "Download Complaint PDF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/1/download-pdf",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "1", "download-pdf"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ML Service",
+			"item": [
+				{
+					"name": "Classify Query - Technical Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"WiFi is not working in the library. Internet connection is very slow and keeps disconnecting.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ml/classify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "classify"]
+						}
+					}
+				},
+				{
+					"name": "Classify Query - Hostel Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"The mess food quality is very poor and my room's water tap is leaking.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ml/classify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "classify"]
+						}
+					}
+				},
+				{
+					"name": "Classify Query - Maintenance Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"The AC in classroom 101 is not working and the door lock is broken. Need urgent repair.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ml/classify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "classify"]
+						}
+					}
+				},
+				{
+					"name": "Classify Query - Academic Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"I need help with my exam schedule and my grades are not showing in the portal.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ml/classify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "classify"]
+						}
+					}
+				},
+				{
+					"name": "ML Service Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/ml/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "status"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Error Testing",
+			"item": [
+				{
+					"name": "404 - Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/nonexistent",
+							"host": ["{{base_url}}"],
+							"path": ["api", "nonexistent"]
+						}
+					}
+				},
+				{
+					"name": "401 - Unauthorized (No Token)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/my-complaints",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "my-complaints"]
+						}
+					}
+				},
+				{
+					"name": "401 - Invalid Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/my-complaints",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "my-complaints"]
+						}
+					}
+				},
+				{
+					"name": "403 - Forbidden (User accessing admin endpoint)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/complaints/all",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "all"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Validation Testing",
+			"item": [
+				{
+					"name": "User Signup - Invalid Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"invalid-email\",\n    \"password\": \"password123\",\n    \"role\": \"student\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/signup",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "User Signup - Short Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"123\",\n    \"role\": \"student\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/signup",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "Submit Complaint - Missing Title",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "This is a test complaint without title",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/complaints/submit",
+							"host": ["{{base_url}}"],
+							"path": ["api", "complaints", "submit"]
+						}
+					}
+				},
+				{
+					"name": "ML Classify - Empty Query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ml/classify",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ml", "classify"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

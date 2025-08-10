@@ -1,0 +1,17 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-CORS==4.0.0
+psycopg2-binary==2.9.7
+PyJWT==2.8.0
+bcrypt==4.0.1
+python-dotenv==1.0.0
+marshmallow==3.20.1
+Flask-Mail==0.9.1
+scikit-learn==1.5.1
+joblib==1.2.0
+numpy==1.26.4
+reportlab==4.0.4
+cloudinary==1.36.0
+Pillow==10.0.1
+requests==2.31.0
+gunicorn==20.1.0

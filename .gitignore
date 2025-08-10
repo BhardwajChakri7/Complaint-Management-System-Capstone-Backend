@@ -1,0 +1,346 @@
+# =============================================================================
+# Flask CMS Backend - .gitignore
+# =============================================================================
+
+# Environment Variables (CRITICAL - Never commit sensitive data)
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# Python
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Flask specific
+# =============================================================================
+instance/
+.webassets-cache
+*.log
+
+# Virtual Environments
+# =============================================================================
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv/
+
+# Database
+# =============================================================================
+*.db
+*.sqlite
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+*.sql
+database.db
+app.db
+
+# Temporary Files & Folders
+# =============================================================================
+tmp/
+temp/
+.tmp/
+.temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Test Files & Generated Content
+# =============================================================================
+test_*.py
+*_test.py
+test_*.pdf
+test_*.jpg
+test_*.png
+test_*.gif
+test_output/
+test_results/
+coverage_html_report/
+
+# ML Models & Training Data (Optional - uncomment if you don't want to track)
+# =============================================================================
+# *.pkl
+# *.joblib
+# *.model
+# training_data/
+# model_checkpoints/
+
+# Logs & Debug Files
+# =============================================================================
+*.log
+logs/
+debug.log
+error.log
+access.log
+app.log
+flask.log
+
+# IDE & Editor Files
+# =============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# System Files
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# File Uploads & Media (Adjust based on your needs)
+# =============================================================================
+uploads/
+media/
+static/uploads/
+user_uploads/
+complaint_attachments/
+
+# Specific file types (uncomment if you don't want to track these)
+# *.pdf
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.bmp
+# *.tiff
+# *.svg
+# *.webp
+# *.mp4
+# *.avi
+# *.mov
+# *.wmv
+# *.flv
+# *.doc
+# *.docx
+# *.xls
+# *.xlsx
+# *.ppt
+# *.pptx
+# *.zip
+# *.rar
+# *.7z
+# *.tar.gz
+
+# Security & Certificates
+# =============================================================================
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+secrets/
+private/
+ssl/
+
+# Backup Files
+# =============================================================================
+*.bak
+*.backup
+*.old
+*.orig
+backup/
+backups/
+
+# Package Managers
+# =============================================================================
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# conda
+.conda/
+
+# Node.js (if you have any frontend assets)
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Docker (if using containerization)
+# =============================================================================
+.dockerignore
+docker-compose.override.yml
+.docker/
+
+# Cloud & Deployment
+# =============================================================================
+.vercel
+.netlify
+.aws/
+.gcp/
+.azure/
+
+# Monitoring & Analytics
+# =============================================================================
+.sentry-native
+sentry_debug_meta.properties
+
+# Custom Project Specific
+# =============================================================================
+# Add any project-specific files/folders here
+config/local.py
+local_config.py
+development.py
+production.py
+
+# Email Templates (if you want to keep them private)
+# email_templates/private/
+
+# API Keys & Tokens (Double check these are not committed)
+api_keys.txt
+tokens.txt
+credentials.json
+service-account.json
+
+# Performance & Profiling
+# =============================================================================
+*.prof
+.profile
+profiling/
+
+# Documentation Build
+# =============================================================================
+docs/_build/
+site/
+
+# Miscellaneous
+# =============================================================================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+# Project Specific Test Files
+# =============================================================================
+test_complaint_with_images.pdf
+test_gemini_chatbot.py
+test_pdf_with_images.py
+test_server_ml.py
+verify_setup.py
