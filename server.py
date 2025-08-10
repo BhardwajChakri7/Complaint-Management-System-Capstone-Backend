@@ -26,7 +26,7 @@ def create_app():
     
     # Initialize extensions
     db.init_app(app)
-    CORS(app, origins=["https://queriespro.vercel.app", "http://127.0.0.1:5173","http://localhost:5173"], supports_credentials=True, methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+    CORS(app, origins=["https://querypro.vercel.app", "http://127.0.0.1:5173","http://localhost:5173"], supports_credentials=True, methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
     
     # Initialize email service
     email_service.init_app(app)
